@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Perpustakaan Soft Pink</title>
+    <style>
+        /* --- Style Dasar Estetik Soft Pink --- */
+        body {
+            font-family: 'Plus Jakarta Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff0f3; 
+            margin: 0;
+            padding: 0;
+            color: #4a373a; 
+        }
+
+        header {
+            background-color: #ffb3c1; 
+            color: #4a373a;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(255, 179, 193, 0.2);
+        }
+
+        .container {
+            padding: 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* --- Profil Admin Estetik --- */
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            margin-right: 10px;
+        }
+
+        .profile-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .profile-role {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        /* --- Style Form Login --- */
+        .login-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 240, 243, 0.7); 
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px 35px;
+            border-radius: 20px;
+            width: 340px;
+            box-shadow: 0 20px 40px rgba(255, 143, 163, 0.15); 
+            text-align: center;
+            border: 1px solid #ffe5ec;
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #ffe5ec;
+            margin: 0 auto 15px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 35px;
+            box-shadow: 0 8px 15px rgba(255, 179, 193, 0.3);
+        }
+
+        .login-box h2 { margin-top: 5px; color: #ff758f; font-weight: 700; font-size: 22px; }
+
+        /* --- Style Form & Input Minimalis --- */
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #805b61;
+            display: block;
+            margin-top: 12px;
+            margin-bottom: 4px;
+        }
+
+        input[type="text"], input[type="number"], input[type="password"] {
+            width: 100%;
+            padding: 12px 16px;
+            margin: 4px 0 12px 0;
+            box-sizing: border-box;
+            border: 1.5px solid #ffe5ec;
+            border-radius: 12px;
+            background-color: #fff0f3;
+            transition: all 0.2s;
+            font-size: 14px;
+            color: #4a373a;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: #ff758f;
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(255, 117, 143, 0.15);
+        }
+
+        .btn {
+            padding: 11px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        .btn-login { 
+            background-color: #ffffff; 
+            color: #ff758f; 
+            width: 100%; 
+            padding: 12px; 
+            margin-top: 15px;
+            border: 2px solid #ff758f;
+            box-shadow: 0 4px 10px rgba(255, 117, 143, 0.1);
+        }
+        .btn-login:hover { 
+            background-color: #ff758f; 
+            color: #ffffff; 
+        }
+        
+        .btn-success { background-color: #ff758f; color: white; } 
+        .btn-success:hover { background-color: #ff4d6d; }
+        
+        .btn-warning { background-color: #ffb3c1; color: #4a373a; }
+        .btn-warning:hover { background-color: #ff85a1; }
+        
+        .btn-danger { background-color: #ff4d6d; color: white; }
+        .btn-danger:hover { background-color: #c9184a; }
+        
+        .btn-secondary { background-color: rgba(255,255,255,0.4); color: #4a373a; border: 1px solid rgba(255,255,255,0.6); }
+        .btn-secondary:hover { background-color: rgba(255,255,255,0.6); }
+        
+        .btn-table-batal { background-color: #a3a3a3; color: white; }
+
+        /* --- Layout Utama Konten --- */
+        .main-content {
+            display: none;
+        }
+
+        .flex-container {
+            display: flex;
+            gap: 35px;
+            margin-top: 10px;
+        }
+
+        .panel-form {
+            background: white;
+            padding: 28px;
+            border-radius: 20px;
+            width: 350px;
+            flex-shrink: 0;
+            box-shadow: 0 10px 20px rgba(255, 179, 193, 0.1);
+            border: 1px solid #ffe5ec;
+        }
+
+        .panel-table {
+            background: white;
+            padding: 28px;
+            border-radius: 20px;
+            flex-grow: 1;
+            box-shadow: 0 10px 20px rgba(255, 179, 193, 0.1);
+            border: 1px solid #ffe5ec;
+        }
+
+        h3 {
+            margin-top: 0;
+            font-weight: 700;
+            color: #4a373a;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        /* --- Style Tabel Bersih --- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #fff0f3;
+            color: #805b61;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            border-bottom: 1px solid #fff0f3;
+            color: #4a373a;
+        }
+
+        tr:hover td { background-color: #fff5f7; }
+        
+        .action-btns {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loginSection" class="login-overlay">
+        <div class="login-box">
+            <div class="login-logo">🌸</div>
+            <h2>LibVerse Login</h2>
+            <p style="color: #a38085; font-size: 13px; margin-bottom: 25px;">Gunakan akun <b>admin</b> / <b>admin123</b></p>
+            <form id="formLogin" onsubmit="prosesLogin(event)">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" class="btn btn-login">Masuk ke Dashboard</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="mainDashboard" class="main-content">
+        <header>
